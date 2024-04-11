@@ -12,3 +12,8 @@
         @endforeach
     </ul>
 @endif
+
+
+@if($project->cover_image)
+    <img src="{{ asset('storage/projects/'.$project->cover_image) }}" alt="Cover Image">
+@endif
