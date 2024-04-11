@@ -77,3 +77,31 @@ public function update(Request $request, Project $project)
 
     return redirect()->route('projects.index');
 }
+
+
+class ImageController extends Controller
+{
+    public function upload(Request $request)
+    {
+       
+        if ($request->hasFile('image')) {
+            
+            $path = $request->file('image')->store('public/projects');
+            $fileName = basename($path);
+            
+        }
+
+    }
+
+    public function moveImage()
+    {
+        
+        $sourcePath = 'contours-blue-butterfly-smoke-black-background-fantastic-magic-background-unusual-nice_700453-1702-_.png'; 
+        $destinationPath = 'public/projects/contours-blue-butterfly-smoke-black-background-fantastic-magic-background-unusual-nice_700453-1702-_.png'; 
+
+        Storage::move($sourcePath, $destinationPath);
+       
+    }
+
+
+}
