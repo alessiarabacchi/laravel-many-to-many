@@ -52,16 +52,25 @@ public function edit(Project $project)
 
 public function store(Request $request)
 {
+    
+{
     $validatedData = $request->validate([
         'name' => 'required|string|max:255',
-        'technologies' => 'array',
-        'technologies.*' => 'exists:technologies,id',
+        'description' => 'required|string',
+        'cover_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        
     ]);
 
-    $project = Project::create($validatedData);
-    $project->technologies()->attach($request->technologies);
+    if ($request->hasFile('cover_image')) {
+        $imageName = time().'.'.$request->cover_image->extension();
+        $request->cover_image->storeAs('public/projects', $imageName);
+        $validatedData['cover_image'] = $imageName;
+    }
+
+    Project::create($validatedData);
 
     return redirect()->route('projects.index');
+    }
 }
 
 public function update(Request $request, Project $project)
