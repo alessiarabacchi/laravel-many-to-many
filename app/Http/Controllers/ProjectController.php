@@ -103,5 +103,6 @@ class ImageController extends Controller
        
     }
 
+    protected $fillable = ['name', 'description', 'type_id', 'cover_image'];
 
 }
